@@ -18,7 +18,7 @@ st.set_page_config(
 
 # Configuring header with logo on the top left
 t1, t2 = st.columns((0.1, 0.8))
-t1.image("index_0.png", width=200)  # Replace with your logo file path
+t1.image("index_0.png", width=200)  # Updated logo file name
 t2.title("Exploring Credit Acceptance (CACC)")
 t2.markdown(
     "This interactive dashboard provides insights into Credit Acceptance Corporation (CACC), showcasing stock trends, company details, and industry trends, while demonstrating my data visualization and AI/ML skills."
@@ -58,8 +58,22 @@ with tab1:
     Credit Acceptance operates with a mission to provide opportunities for credit-challenged customers while maintaining strong partnerships with auto dealers.
     """
 
+    # Suggested questions
+    st.write("### Suggested Questions:")
+    suggested_questions = [
+        "When was Credit Acceptance founded?",
+        "What does Credit Acceptance offer?",
+        "What is Credit Acceptance's mission?",
+    ]
+    for question in suggested_questions:
+        if st.button(question):
+            user_question = question
+            qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
+            answer = qa_pipeline(question=user_question, context=context)
+            st.write(f"**Answer:** {answer['answer']}")
+
     # User question input
-    user_question = st.text_input("Enter your question about Credit Acceptance:")
+    user_question = st.text_input("Or ask your own question about Credit Acceptance:")
     if user_question:
         qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
         answer = qa_pipeline(question=user_question, context=context)
